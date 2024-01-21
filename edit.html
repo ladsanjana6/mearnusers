@@ -1,0 +1,57 @@
+<input type='text' id='name' placeholder='name'> <br>
+<input type='text' id='age' placeholder='age'> <br>
+<input type='text' id='city' placeholder='city'> <br>
+<button onclick='putData()'>Update</button>
+
+<script>
+
+    const urlParams = new URLSearchParams( window.location.search );
+    const id = urlParams.get( 'id' );
+
+
+    fetch( `http://localhost:8989/users/${ id }` )
+        .then( res => res.json() )
+        .then( result => {
+            console.table( result )
+
+            document.getElementById( "name" ).value = result[ 'name' ]
+            document.getElementById( "age" ).value = result[ 'age' ]
+            document.getElementById( "city" ).value = result[ 'city' ]
+
+        } )
+
+    function putData () {
+
+        var name = document.getElementById( "name" ).value
+        var age = document.getElementById( "age" ).value
+        var city = document.getElementById( "city" ).value
+
+        var data = {
+            "id": id,
+            "name": name,
+            "age": age,
+            "city": city
+
+        }
+
+        fetch( "http://localhost:8989/users", {
+            method: "PUT",
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify( data )
+        } )
+            .then( res => res.json() )
+            .then( res => {
+                window.location.href = "listing.html";
+            } )
+
+
+    }
+
+
+
+
+
+</script>

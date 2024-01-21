@@ -1,0 +1,42 @@
+
+
+
+<input type='text' id='name' placeholder='name'> <br>
+<input type='text' id='age' placeholder='age'> <br>
+<input type='text' id='city' placeholder='city'> <br>
+<button onclick='postData()'>Submit</button>
+
+<script>
+    function postData () {
+        var name = document.getElementById( "name" ).value
+        var age = document.getElementById( "age" ).value
+        var city = document.getElementById( "city" ).value
+
+
+        var data = {
+            "name": name,
+            "age": age,
+            "city": city
+        }
+
+        fetch( "http://localhost:8989/users", {
+
+            method: "POST",
+            headers: {
+                'Accept': 'application/json',
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify( data )
+
+        } )
+
+            .then( res => res.json() )
+            .then( res => {
+                window.location.href = "listing.html";
+            } )
+
+
+
+
+    }
+</script>
